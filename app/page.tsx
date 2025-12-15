@@ -262,7 +262,7 @@ export default function Home() {
               </>
             ) : (
               <>
-                <h2 className={styles.thankYouTitle}>We're sorry to hear about your negative experience.</h2>
+                <h2 className={styles.thankYouTitle}>We&apos;re sorry to hear about your negative experience.</h2>
               </>
             )}
           </>
