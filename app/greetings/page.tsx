@@ -145,7 +145,7 @@ export default function GreetingsPage() {
           {!logoError ? (
             <>
               {logoLoading && (
-                <div className={styles.skeleton} style={{ width: '300px', height: '200px', margin: '0 auto', position: 'absolute', top: '25px', left: '50%', transform: 'translateX(-50%)' }}></div>
+                <div className={`${styles.skeleton} ${styles.skeletonLogo}`}></div>
               )}
               <Image
                 src="https://orderbyte.io/api/v1/download/brands/85854185-aaf6-4780-ba06-d4b988a0452e.png"
@@ -179,7 +179,7 @@ export default function GreetingsPage() {
         <div className={styles.audioPlayerContainer}>
           <div style={{ position: 'relative', flexShrink: 0 }}>
             {thumbnailLoading && (
-              <div className={styles.skeleton} style={{ width: '120px', height: '120px', position: 'absolute', top: 0, left: 0 }}></div>
+              <div className={`${styles.skeleton} ${styles.skeletonThumbnail}`}></div>
             )}
             <Image
               src="/restaurant-staff.jpg"
@@ -260,7 +260,7 @@ export default function GreetingsPage() {
                   <a href="https://g.page/r/CV058mFt7KibEAE/review" className={styles.reviewPlatform} target="_blank" rel="noopener noreferrer">
                     <div style={{ position: 'relative' }}>
                       {googleLogoLoading && (
-                        <div className={styles.skeleton} style={{ width: '180px', height: '60px', position: 'absolute', top: 0, left: 0 }}></div>
+                        <div className={`${styles.skeleton} ${styles.skeletonReviewLogo}`} style={{ maxWidth: '180px' }}></div>
                       )}
                       <Image
                         src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
@@ -279,7 +279,7 @@ export default function GreetingsPage() {
                   <a href="https://www.yelp.com/writeareview/biz/ZzDaZP8TPhBXWvZrLNLwFg?return_url=%2Fbiz%2FZzDaZP8TPhBXWvZrLNLwFg&review_origin=biz-details-war-button" className={styles.reviewPlatform} target="_blank" rel="noopener noreferrer">
                     <div style={{ position: 'relative' }}>
                       {yelpLogoLoading && (
-                        <div className={styles.skeleton} style={{ width: '150px', height: '60px', position: 'absolute', top: 0, left: 0 }}></div>
+                        <div className={`${styles.skeleton} ${styles.skeletonReviewLogo}`} style={{ maxWidth: '150px' }}></div>
                       )}
                       <Image
                         src="/yelp-logo.svg"
