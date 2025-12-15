@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message from Restaurant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px 30px;
+            margin-top: 20px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-border {
+            border: 8px solid #2d5016;
+            border-radius: 12px;
+            padding: 25px 20px;
+            background: white;
+            display: inline-block;
+            position: relative;
+        }
+
+        .restaurant-logo {
+            max-width: 100%;
+            height: auto;
+            max-height: 200px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .logo-banner-top {
+            background: #2d5016;
+            color: white;
+            padding: 8px 20px;
+            font-weight: bold;
+            font-size: 18px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .logo-main {
+            color: #c41e3a;
+            font-size: 42px;
+            font-weight: bold;
+            line-height: 1.2;
+            margin: 15px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-ampersand {
+            font-size: 28px;
+            color: #c41e3a;
+            margin: 10px 0;
+        }
+
+        .logo-banner-bottom {
+            background: #2d5016;
+            color: white;
+            padding: 8px 20px;
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .message-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .message-title {
+            color: #1a4480;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .audio-player-container {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .audio-player-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .audio-thumbnail {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
+
+        .audio-controls {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .play-button {
+            width: 50px;
+            height: 50px;
+            background: #1a4480;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(26, 68, 128, 0.3);
+        }
+
+        .play-button:hover {
+            background: #2a5ba0;
+            transform: scale(1.1);
+        }
+
+        .play-button:active {
+            transform: scale(0.95);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4a90e2 0%, #357abd 100%);
+            width: 0%;
+            transition: width 0.1s linear;
+            border-radius: 4px;
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .rating-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .rating-title {
+            color: #1a4480;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .stars-container {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 25px;
+        }
+
+        .star {
+            font-size: 48px;
+            color: #ffd700;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            user-select: none;
+        }
+
+        .star:hover {
+            transform: scale(1.2);
+        }
+
+        .star.empty {
+            color: #d3d3d3;
+        }
+
+        .star.half {
+            background: linear-gradient(90deg, #ffd700 50%, #d3d3d3 50%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .submit-button {
+            background: #c41e3a;
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(196, 30, 58, 0.4);
+            font-family: 'Georgia', serif;
+        }
+
+        .submit-button:hover {
+            background: #a01a2e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(196, 30, 58, 0.5);
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        .reviews-section {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .review-platform {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .review-platform:hover {
+            transform: scale(1.05);
+        }
+
+        .google-logo {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #4285f4, #34a853, #fbbc05, #ea4335);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .google-reviews {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .google-stars {
+            color: #ffd700;
+            font-size: 16px;
+        }
+
+        .yelp-logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #d32323;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .yelp-icon {
+            color: #d32323;
+            font-size: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .logo-main {
+                font-size: 32px;
+            }
+
+            .audio-player-container {
+                flex-direction: column;
+            }
+
+            .audio-thumbnail {
+                width: 80px;
+                height: 80px;
+            }
+
+            .reviews-section {
+                flex-direction: column;
+                gap: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo-border">
+                <img src="https://orderbyte.io/api/v1/download/brands/85854185-aaf6-4780-ba06-d4b988a0452e.png" 
+                     alt="Restaurant Logo" 
+                     class="restaurant-logo"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="logo-fallback" style="display: none;">
+                    <div class="logo-banner-top">FLINTRIDGE</div>
+                    <div class="logo-main">ITALIAN DELI</div>
+                    <div class="logo-ampersand">&</div>
+                    <div class="logo-main" style="font-size: 36px;">PIZZA CO.</div>
+                    <div class="logo-banner-bottom">DELICATESSEN</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="message-section">
+            <h2 class="message-title">You have a message</h2>
+            <div class="audio-player-container">
+                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=200&h=200&fit=crop" 
+                     alt="Restaurant" 
+                     class="audio-thumbnail"
+                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23c41e3a%22 width=%22200%22 height=%22200%22/%3E%3Ctext fill=%22white%22 font-size=%2240%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3E🍕%3C/text%3E%3C/svg%3E'">
+                <div class="audio-controls">
+                    <button class="play-button" id="playButton" onclick="togglePlay()">
+                        <span id="playIcon">▶</span>
+                    </button>
+                    <div class="progress-bar-container" onclick="seek(event)">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <div class="time-display">
+                        <span id="currentTime">0:00</span>
+                        <span id="duration">0:00</span>
+                    </div>
+                </div>
+                <audio id="audioPlayer" preload="metadata">
+                    <!-- Replace with your audio recording URL -->
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+
+        <div class="rating-section">
+            <h2 class="rating-title">Please rate us</h2>
+            <div class="stars-container" id="starsContainer">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">★</span>
+            </div>
+            <button class="submit-button" onclick="submitRating()">Submit</button>
+        </div>
+
+        <div class="reviews-section">
+            <a href="#" class="review-platform" target="_blank">
+                <div class="google-logo">Google</div>
+                <div class="google-reviews">Reviews</div>
+                <div class="google-stars">★★★★★</div>
+            </a>
+            <a href="#" class="review-platform" target="_blank">
+                <div class="yelp-logo">
+                    yelp<span class="yelp-icon">✱</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('audioPlayer');
+        const playButton = document.getElementById('playButton');
+        const playIcon = document.getElementById('playIcon');
+        const progressBar = document.getElementById('progressBar');
+        const currentTimeDisplay = document.getElementById('currentTime');
+        const durationDisplay = document.getElementById('duration');
+        const stars = document.querySelectorAll('.star');
+        
+        let currentRating = 0;
+        let hoveredRating = 0;
+
+        // Audio functions
+        audio.addEventListener('loadedmetadata', () => {
+            durationDisplay.textContent = formatTime(audio.duration);
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            progressBar.style.width = progress + '%';
+            currentTimeDisplay.textContent = formatTime(audio.currentTime);
+        });
+
+        audio.addEventListener('ended', () => {
+            playIcon.textContent = '▶';
+            audio.currentTime = 0;
+        });
+
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play();
+                playIcon.textContent = '❚❚';
+            } else {
+                audio.pause();
+                playIcon.textContent = '▶';
+            }
+        }
+
+        function seek(event) {
+            const progressBarContainer = event.currentTarget;
+            const clickX = event.offsetX;
+            const width = progressBarContainer.offsetWidth;
+            const percentage = clickX / width;
+            audio.currentTime = percentage * audio.duration;
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Rating functions
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                currentRating = index + 1;
+                updateStars();
+            });
+
+            star.addEventListener('mouseenter', () => {
+                hoveredRating = index + 1;
+                updateStars();
+            });
+        });
+
+        document.getElementById('starsContainer').addEventListener('mouseleave', () => {
+            hoveredRating = 0;
+            updateStars();
+        });
+
+        function updateStars() {
+            const rating = hoveredRating || currentRating;
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('empty', 'half');
+                } else {
+                    star.classList.add('empty');
+                    star.classList.remove('half');
+                }
+            });
+        }
+
+        function submitRating() {
+            if (currentRating === 0) {
+                alert('Please select a rating before submitting');
+                return;
+            }
+            
+            // Here you can add server data submission
+            alert(`Thank you for your ${currentRating} star rating!`);
+            
+            // Optional: redirect to reviews page
+            // window.location.href = 'https://www.google.com/maps/...';
+        }
+
+        // Initialization: show 4.5 stars by default
+        currentRating = 4.5;
+        updateStars();
+        stars.forEach((star, index) => {
+            if (index === 4) {
+                star.classList.add('half');
+            }
+        });
+    </script>
+</body>
+</html>
