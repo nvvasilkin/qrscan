@@ -25,8 +25,8 @@ git push -u origin main
 1. **Clone repository:**
 ```bash
 cd /var/www
-git clone <your-repository-url> flintridgepizzakitchen-greetings
-cd flintridgepizzakitchen-greetings
+git clone <your-repository-url> qrscan
+cd qrscan
 ```
 
 2. **Install dependencies:**
@@ -81,7 +81,7 @@ git push origin main
 ### On Production Server
 
 ```bash
-cd /var/www/flintridgepizzakitchen-greetings
+cd /var/www/qrscan
 ./deploy.sh
 ```
 

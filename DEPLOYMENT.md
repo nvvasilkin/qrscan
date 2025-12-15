@@ -14,8 +14,8 @@
 
 ```bash
 cd /var/www
-git clone <your-repo-url> flintridgepizzakitchen-greetings
-cd flintridgepizzakitchen-greetings
+git clone <your-repo-url> qrscan
+cd qrscan
 ```
 
 ### 2. Install Dependencies

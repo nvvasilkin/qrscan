@@ -3,7 +3,7 @@ module.exports = {
     name: 'qrscan-restaurant-message',
     script: 'npm',
     args: 'start',
-    cwd: '/var/www/flintridgepizzakitchen-greetings',
+    cwd: '/var/www/qrscan',
     instances: 1,
     autorestart: true,
     watch: false,
