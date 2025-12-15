@@ -15,6 +15,10 @@ export default function GreetingsPage() {
   const [logoError, setLogoError] = useState(false)
   const [ratingSubmitted, setRatingSubmitted] = useState(false)
   const [isReady, setIsReady] = useState(false)
+  const [logoLoading, setLogoLoading] = useState(true)
+  const [thumbnailLoading, setThumbnailLoading] = useState(true)
+  const [googleLogoLoading, setGoogleLogoLoading] = useState(true)
+  const [yelpLogoLoading, setYelpLogoLoading] = useState(true)
 
   // Check session synchronously before paint using useLayoutEffect
   useLayoutEffect(() => {
@@ -139,15 +143,25 @@ export default function GreetingsPage() {
       <div className={styles.logoContainer}>
         <div className={styles.logoBorder}>
           {!logoError ? (
-            <Image
-              src="https://orderbyte.io/api/v1/download/brands/85854185-aaf6-4780-ba06-d4b988a0452e.png"
-              alt="Restaurant Logo"
-              width={300}
-              height={200}
-              className={styles.restaurantLogo}
-              onError={() => setLogoError(true)}
-              unoptimized
-            />
+            <>
+              {logoLoading && (
+                <div className={styles.skeleton} style={{ width: '300px', height: '200px', margin: '0 auto', position: 'absolute', top: '25px', left: '50%', transform: 'translateX(-50%)' }}></div>
+              )}
+              <Image
+                src="https://orderbyte.io/api/v1/download/brands/85854185-aaf6-4780-ba06-d4b988a0452e.png"
+                alt="Restaurant Logo"
+                width={300}
+                height={200}
+                className={`${styles.restaurantLogo} ${logoLoading ? styles.loading : ''}`}
+                onError={() => {
+                  setLogoError(true)
+                  setLogoLoading(false)
+                }}
+                onLoad={() => setLogoLoading(false)}
+                onLoadingComplete={() => setLogoLoading(false)}
+                unoptimized
+              />
+            </>
           ) : (
             <div className={styles.logoFallback}>
               <div className={styles.logoBannerTop}>FLINTRIDGE</div>
@@ -163,14 +177,21 @@ export default function GreetingsPage() {
       <div className={styles.messageSection}>
         <h2 className={styles.messageTitle}>You have a message</h2>
         <div className={styles.audioPlayerContainer}>
-          <Image
-            src="/restaurant-staff.jpg"
-            alt="Flintridge Pizza Kitchen Staff"
-            width={120}
-            height={120}
-            className={styles.audioThumbnail}
-            unoptimized
-          />
+          <div style={{ position: 'relative', flexShrink: 0 }}>
+            {thumbnailLoading && (
+              <div className={styles.skeleton} style={{ width: '120px', height: '120px', position: 'absolute', top: 0, left: 0 }}></div>
+            )}
+            <Image
+              src="/restaurant-staff.jpg"
+              alt="Flintridge Pizza Kitchen Staff"
+              width={120}
+              height={120}
+              className={`${styles.audioThumbnail} ${thumbnailLoading ? styles.loading : ''}`}
+              onLoad={() => setThumbnailLoading(false)}
+              onLoadingComplete={() => setThumbnailLoading(false)}
+              unoptimized
+            />
+          </div>
           <div className={styles.audioControls}>
             <button 
               className={styles.playButton}
@@ -237,26 +258,40 @@ export default function GreetingsPage() {
                 <p className={styles.thankYouText}>Please share your review online by clicking on Google and/or Yelp below.</p>
                 <div className={styles.reviewsSection}>
                   <a href="https://g.page/r/CV058mFt7KibEAE/review" className={styles.reviewPlatform} target="_blank" rel="noopener noreferrer">
-                    <Image
-                      src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-                      alt="Google Reviews"
-                      width={180}
-                      height={60}
-                      className={styles.reviewLogo}
-                      unoptimized
-                    />
+                    <div style={{ position: 'relative' }}>
+                      {googleLogoLoading && (
+                        <div className={styles.skeleton} style={{ width: '180px', height: '60px', position: 'absolute', top: 0, left: 0 }}></div>
+                      )}
+                      <Image
+                        src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+                        alt="Google Reviews"
+                        width={180}
+                        height={60}
+                        className={`${styles.reviewLogo} ${googleLogoLoading ? styles.loading : ''}`}
+                        onLoad={() => setGoogleLogoLoading(false)}
+                        onLoadingComplete={() => setGoogleLogoLoading(false)}
+                        unoptimized
+                      />
+                    </div>
                     <div className={styles.googleReviewsText}>Reviews</div>
                     <div className={styles.googleStars}>★★★★★</div>
                   </a>
                   <a href="https://www.yelp.com/writeareview/biz/ZzDaZP8TPhBXWvZrLNLwFg?return_url=%2Fbiz%2FZzDaZP8TPhBXWvZrLNLwFg&review_origin=biz-details-war-button" className={styles.reviewPlatform} target="_blank" rel="noopener noreferrer">
-                    <Image
-                      src="/yelp-logo.svg"
-                      alt="Yelp"
-                      width={150}
-                      height={60}
-                      className={styles.reviewLogo}
-                      unoptimized
-                    />
+                    <div style={{ position: 'relative' }}>
+                      {yelpLogoLoading && (
+                        <div className={styles.skeleton} style={{ width: '150px', height: '60px', position: 'absolute', top: 0, left: 0 }}></div>
+                      )}
+                      <Image
+                        src="/yelp-logo.svg"
+                        alt="Yelp"
+                        width={150}
+                        height={60}
+                        className={`${styles.reviewLogo} ${yelpLogoLoading ? styles.loading : ''}`}
+                        onLoad={() => setYelpLogoLoading(false)}
+                        onLoadingComplete={() => setYelpLogoLoading(false)}
+                        unoptimized
+                      />
+                    </div>
                   </a>
                 </div>
               </>
