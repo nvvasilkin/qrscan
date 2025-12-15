@@ -66,12 +66,39 @@ server {
     
     # Your existing SSL and other configurations...
     
-    # Your existing location blocks...
-    location / {
-        # existing configuration
+    # IMPORTANT: Next.js static files must come BEFORE /greetings
+    # Next.js static files (_next/static)
+    location /_next/static {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_valid 200 60m;
+        add_header Cache-Control "public, immutable";
+        expires 1y;
     }
     
-    # ADD THESE BLOCKS FOR /greetings ROUTE:
+    # Next.js API routes and other _next paths
+    location /_next {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+    
+    # Your existing location blocks...
+    location / {
+        # existing configuration for main site
+    }
+    
+    # ADD THIS BLOCK FOR /greetings ROUTE:
     location /greetings {
         proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
@@ -88,26 +115,21 @@ server {
         proxy_read_timeout 60s;
     }
     
-    location /greetings/_next/static {
-        proxy_pass http://localhost:3000;
-        proxy_cache_valid 200 60m;
-        add_header Cache-Control "public, immutable";
-        expires 1y;
-    }
-    
-    location /greetings/_next {
+    # Static assets from public folder
+    location ~* ^/(restaurant-staff\.jpg|yelp-logo\.svg|google-reviews-logo\.svg)$ {
         proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_cache_bypass $http_upgrade;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
     }
 }
 ```
+
+**Important Notes:**
+- Location blocks are matched in order - more specific paths should come first
+- `/_next/static` must come BEFORE `/greetings` to catch static files
+- Make sure Next.js server is running on port 3000: `pm2 status`
 
 ## Deployment Process
 
