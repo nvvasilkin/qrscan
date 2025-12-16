@@ -218,7 +218,7 @@ export default function GreetingsPage() {
           <audio
             ref={audioRef}
             preload="metadata"
-            src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+            src="/audio.mp4"
           >
             Your browser does not support the audio element.
           </audio>
