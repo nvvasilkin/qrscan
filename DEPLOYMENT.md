@@ -115,11 +115,26 @@ server {
         proxy_read_timeout 60s;
     }
     
-    # Static assets from public folder
-    location ~* ^/(restaurant-staff\.jpg|yelp-logo\.svg|google-reviews-logo\.svg)$ {
+    # Static assets from public folder (images, SVGs, audio, etc.)
+    location ~* ^/(restaurant-staff\.jpg|yelp-logo\.svg|google-reviews-logo\.svg|audio\.mp4)$ {
         proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+    
+    # Audio/Video files with proper MIME types
+    location ~* \.(mp4|mp3|m4a|webm|ogg)$ {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
         expires 1y;
         add_header Cache-Control "public, immutable";
     }
